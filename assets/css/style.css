@@ -1,13 +1,4 @@
-/**
-* Template Name: iPortfolio - v3.9.1
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 body {
   font-family: "Open Sans", sans-serif;
   color: #272829;
@@ -72,7 +63,7 @@ h6 {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 60px;
   width: 300px;
   transition: all ease-in-out 0.5s;
   z-index: 9997;
@@ -80,6 +71,7 @@ h6 {
   padding: 0 15px;
   background: #040b14;
   overflow-y: auto;
+  border-right: 1px #fff solid;
 }
 
 #header .profile img {
@@ -87,6 +79,7 @@ h6 {
   display: block;
   width: 120px;
   border: 8px solid #2c2f3f;
+  background:#fff;
 }
 
 #header .profile h1 {
@@ -164,7 +157,7 @@ h6 {
   display: flex;
   align-items: center;
   color: #a8a9b4;
-  padding: 12px 15px;
+  padding: 5px 15px ;
   margin-bottom: 8px;
   transition: 0.3s;
   font-size: 15px;
@@ -294,7 +287,7 @@ h6 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 30px 0;
   overflow: hidden;
 }
 
@@ -310,7 +303,7 @@ section {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 3px;
   position: relative;
   color: #173b6c;
 }
@@ -319,7 +312,7 @@ section {
   content: "";
   position: absolute;
   display: block;
-  width: 50px;
+  width: 95px;
   height: 3px;
   background: #149ddd;
   bottom: 0;
@@ -333,21 +326,22 @@ section {
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
+/*
 .about .content h3 {
   font-weight: 700;
   font-size: 26px;
   color: #173b6c;
 }
-
+*/
 .about .content ul {
-  list-style: none;
+ 
   padding: 0;
 }
 
 .about .content ul li {
-  margin-bottom: 20px;
-  display: flex;
+  margin-bottom: 7px;  
   align-items: center;
+  list-style-position: inside;
 }
 
 .about .content ul strong {
@@ -482,9 +476,9 @@ section {
 }
 
 .resume .resume-item h5 {
-  font-size: 16px;
+  font-size: 15px;
   background: #e4edf9;
-  padding: 5px 15px;
+  padding: 3px 10px;
   display: inline-block;
   font-weight: 600;
   margin-bottom: 10px;
@@ -529,6 +523,7 @@ section {
   background: #fff;
   border-radius: 50px;
   padding: 2px 15px;
+  background: #e1e6ec;
 }
 
 .portfolio #portfolio-flters li {
@@ -558,6 +553,8 @@ section {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  border: 1px solid #2967b7;
+  height:250px;
 }
 
 .portfolio .portfolio-wrap::before {
@@ -1073,7 +1070,7 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  padding: 15px;
+  padding: 20px 15px;
   color: #f4f6fd;
   font-size: 14px;
   position: fixed;
@@ -1082,6 +1079,7 @@ section {
   width: 300px;
   z-index: 9999;
   background: #040b14;
+  border-right: 1px #fff solid;
 }
 
 #footer .copyright {
@@ -1101,4 +1099,44 @@ section {
     width: auto;
     padding-right: 20px 15px;
   }
+}
+
+/*--------------------------------------------------------------
+# new css added
+--------------------------------------------------------------*/
+body{
+  font-size:15px;
+}
+h3{
+  font-weight: 700;
+  font-size: 18px;
+  color: #173b6c;
+}
+ul li{  
+  list-style-position: inside !important;
+}
+.ft-13{
+  font-size: 13px;
+}
+.ft-14{
+  font-size: 14px;
+}
+.sumary-title{
+  padding-top: 15px ;
+}
+.sumary-title h2{
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 3px;
+  position: relative;
+  color: #173b6c;
+}
+
+.project table th:first-child  {
+  width:150px;
+}
+
+table tr {
+  border-color: #2b94d2;;
 }
