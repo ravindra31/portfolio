@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="" content="Doctor Portal">
+    <title>Doctor Portal</title>
+   <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion dashboard-link" id="accordionSidebar">
+            <li class="nav-item">
+                <a class="sidebar-brand d-flex align-items-center" href="">
+                    <div class="sidebar-brand-icon mr-2">
+                        <img src="img/home.png">
+                    </div>
+                    <div class="sidebar-brand-text"> Company </div>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <img src="img/dashboard.png">
+                    <span>Home</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="img/calender.png">
+                    <span>Calender</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="img/user.png">
+                    <span>User</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="img/edit-account.png">
+                    <span>Edit Account</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="img/chat.png">
+                    <span>Chat</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="img/contacts.png">
+                    <span>Contacts</span></a>
+            </li>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top ">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="btn-round-toogle text-center d-none d-md-inline sidebar">
+                        <button class="btn-side-toogle" id="sidebarToggle"></button>
+                    </div>
+
+
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light  small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-light border border-left-0" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">User Name</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                        </li>
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw fa-lg"></i>
+                            </a>
+
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- Begin body Page Content -->
+                <div class="container-fluid mb-5 mx-0">
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-8 col-sm-12">
+                            <div class="col-xxl-4 col-xl-12 mb-4 p-0">
+                                <div class="card card-shadow">
+                                    <div class="card-body card-bg pb-0">
+                                        <div class="row align-items-center px-4">
+                                            <div class="col-xl-6 col-md-6 col-xxl-12 pr-0">
+                                                <div class="text-body">
+                                                    <h4 class="card-online-title mb-0">Online Doctor Consultation</h4>
+                                                    <p>Get response for your health problmes
+                                                    </p>
+                                                    <p class="mb-0">
+                                                        <button type="button" class="btn btn-danger">
+                                                            Find a doctor</button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-md-6 col-xxl-12 text-center pr-0">
+                                                <img class="img-fluid" src="img/online-doctor.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="row">
+                                    <div class="col-md-12 col-xl-6 col-sm-12">
+                                        <div class="card card-shadow">
+                                            <div class="card-body p-0">
+                                                <h4 class="card-online-title mb-3 pt-4 mb-4 online-space">Doctor Online
+                                                </h4>
+                                                <div class="media py-2 online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa </h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line"></div>
+                                                <div class="media py-2 online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa</h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line"></div>
+                                                <div class="media py-1 online-active-bg online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa</h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                    <div class="pt-3">
+                                                        <img class="" src="img/online-call.png" height="37px"
+                                                            width="35px">
+                                                        <img class="" src="img/online-chat.png" height="37px"
+                                                            width="35px">
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line"></div>
+                                                <div class="media py-2 online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa</h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line"></div>
+                                                <div class="media py-1 online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa</h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                </div>
+                                                <div class="hr-line"></div>
+                                                <div class="media py-2 online-space cursor">
+                                                    <img src="img/undraw_profile.svg"
+                                                        class="align-self-center online-user-img mr-3 rounded-circle">
+                                                    <div class="media-body online-user">
+                                                        <h6 class="mb-0">Rani Brawa</h6>
+                                                        <p class="mb-0">Surgeon </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-6 col-sm-12">
+                                        <div class="card card-shadow mt-card-md">
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="col-8 pl-0">
+                                                        <h4 class="card-online-title mb-4">Vitamins</h4>
+                                                        <img class="img-fluid" src="img/chart.png">
+                                                    </div>
+                                                    <div class="col-4 pr-0">
+
+                                                        <ul style="list-style-type:square;" class="list-group">
+                                                            <h5 class="text-expand py-1 text-right"
+                                                                style="width: 70px;">Expand</h5>
+                                                            <li class="text-primary">
+                                                                <span
+                                                                    class="text-body font-weight-bold text-medium">Vitamin
+                                                                    A </span></span>
+                                                                <P class="text-body mb-2" style>21%</P>
+                                                            </li>
+
+                                                            <li class="text-primary">
+                                                                <span
+                                                                    class="text-body font-weight-bold text-medium">Vitamin
+                                                                    A </span></span>
+                                                                <P class="text-body mb-2" style>21%</P>
+                                                            </li>
+
+                                                            <li class="text-primary">
+                                                                <span
+                                                                    class="text-body font-weight-bold text-medium">Vitamin
+                                                                    A </span></span>
+                                                                <P class="text-body mb-2" style>21%</P>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="card  card-shadow mt-3">
+                                            <div class="card-body pb-0">
+                                                <div class="d-flex">
+                                                    <div class="col-8 pl-0">
+                                                        <h4 class="card-online-title mb-4">Vitamins</h4>
+                                                    </div>
+                                                    <div class="col-4 pr-0">
+                                                        <h5 class="text-expand py-1 text-right" style="width: 70px;">
+                                                            Expand</h5>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <img class="img-fluid" src="img/water-balance.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-4 col-xxl-4 col-sm-12 card-online-title specialist">
+                            Find Specialist
+                            <p> Choose your catagory</p>
+                            <div class="card card-shadow mt-3 cursor">
+                                <div class="card-body py-1">
+                                    <div class="media">
+                                        <img class="img-fluid align-self-center online-user-img mr-3 rounded-circle"
+                                            src="img/dentist.png">
+                                        <div class="media-body online-user">
+                                            <h6 class="mb-0">Dentist</h6>
+                                            <p class="mb-0">90 Available </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-shadow card-mb-mt cursor">
+                                <div class="card-body py-1">
+                                    <div class="media">
+                                        <img class="img-fluid align-self-center online-user-img mr-3 rounded-circle"
+                                            src="img/orthopedist.png">
+                                        <div class="media-body online-user">
+                                            <h6 class="mb-0">Orthopedist</h6>
+                                            <p class="mb-0">21 Available </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-shadow card-mb-mt cursor">
+                                <div class="card-body py-1">
+                                    <div class="media">
+                                        <img class="img-fluid align-self-center online-user-img mr-3 rounded-circle"
+                                            src="img/surgon.png">
+                                        <div class="media-body online-user">
+                                            <h6 class="mb-0">Surgon</h6>
+                                            <p class="mb-0">60 Available </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-shadow cursor">
+                                <div class="card-body py-1">
+                                    <div class="media">
+                                        <img class="img-fluid align-self-center online-user-img mr-3 rounded-circle"
+                                            src="img/physician.png">
+                                        <div class="media-body online-user">
+                                            <h6 class="mb-0">General Physicion</h6>
+                                            <p class="mb-0">50 Available </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-shadow mt-4">
+                                <div class="card-body bg-health-card text-center ">
+                                    <span class="font-weight-600"> Doctor. Health Credit Card</span>
+                                    <p>
+                                        Lorem Ipsum has been the industry's standard dummy
+                                        text ever since the 1500s when an.
+                                    </p>
+                                    <button type="button" class="btn btn-danger mt-2 mb-3">
+                                        Apply Now
+                                    </button>
+                                    <div class="my-4">
+                                        <img src="img/card.png" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://kit.fontawesome.com/ec9ef01d95.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/js/sb-admin-2.min.js"></script>
+</body>
+
+</html>
