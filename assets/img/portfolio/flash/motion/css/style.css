@@ -1,0 +1,287 @@
+body{
+    padding:0px;
+    margin:0px;
+    height:100%;
+    overflow: hidden; 
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+ 
+.main-screen{
+    height:100%;
+    width:1360px; 
+    position: relative; 
+    overflow: hidden; 
+    display: flex; 
+    background-image: url("../images/bg-img.jpg");
+    background-repeat:no-repeat;
+}
+
+.left div:nth-child(1) {
+    clip-path: polygon(0% 0%, 100% 0%, 25% 100%, 0% 100%);
+    background-color: #2fff17; 
+    width:180px; 
+    
+}
+.left div:nth-child(2) {
+    clip-path: polygon(53% 0%, 100% 0%, 55% 100%, 3.09% 100%);
+    background-color: #2fffff;  
+    position: absolute;
+    top: 0px;
+    left: 36px; 
+    width:270px; 
+}
+.left div:nth-child(3) {
+    clip-path: polygon(31% 0%, 83% 0%, 51% 100%, 1.09% 100%);
+    background-color: #cfff17; 
+    position: absolute;
+    top: 0px;
+    left: 180px; 
+    width:400px;
+    animation-name: black-yellow-bg;
+    animation-duration: 2s;    
+    transition: all 1s ease-out ;        
+    animation-delay: 1s;
+    animation-fill-mode:forwards;
+}
+.left div:nth-child(3), .left div:nth-child(4), .logo, .left,.black-bg, .ready-text, .we-jump, .menu-button, .you-solid, .we-love
+{
+  animation-fill-mode:forwards;
+} 
+
+.left div:nth-child(4) {
+    clip-path: polygon(100% 0%, 59.03% 0%, 14.04% 100%, 55% 110%);
+    background-color: #6b7e15;
+    position: absolute;
+    top: 0px;
+    left: 318px; 
+    width:329px;  
+    animation-name: yellow-bg;
+    animation-duration: 2s;    
+    transition: all 1s ease-out ;        
+    animation-delay: 1s;
+      
+}
+.right div:nth-child(1) {
+    clip-path: polygon(100% 0%, 20% 0%, 5% 100%, 100% 100%);
+    background-color: #1a1414;
+    position: absolute;
+    top: 0px;
+    left: 464px; 
+    width:902px;
+}
+.grren-bg, .blue-bg, .yellow-bg, .dark-yelow-bg, .black-bg{ 
+    height:605px;
+}
+
+.left,.black-bg{   
+    animation-name: left-slider;
+    animation-duration: 2s;    
+    transition: all 1s ease-out ;        
+    animation-delay: 1s;    
+    /*transform: translateX(-65%);*/
+}
+.black-bg{    
+    animation-name: right-slider;
+    }
+.logo{
+    animation-name: logo-slider;    
+    animation-delay: 3.5s; 
+    top:40%; 
+    left:35%;    
+}
+.ready-text{
+    animation-name: ready-text;     
+    animation-delay: 2.5s;    
+    color: #cfff17;
+    font-size: 50px;
+    rotate: 90deg;    
+    right: -14%;
+    top: 42%;
+    font: 800 40px Arial;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px;
+}
+.we-jump{
+  animation-name: we-jump;   
+  animation-delay: 2.5s;  
+  color: #fff;
+  font-size: 50px;
+  left: 40%;
+  bottom: -20%;
+}
+.we-jump, .ready-text, .logo, .menu-button, .you-solid, .we-love {  
+  animation-duration: 1s;    
+  transition: all 1s ease-out;
+  position: absolute;
+}
+
+ /*page loader*/
+ .page-loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #272727;
+  z-index: 1000;  
+}
+  
+.spinner {
+  position: relative;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  top:30%;
+  left:40%;
+}
+.menu-button{
+  animation-name: menu-button;
+  animation-delay: 2.5s;  
+  font-size: 15px;
+  right: -5%;
+  top: 3%;
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+}
+.menu-button span{padding-right: 7px;}
+.menu-button:hover{
+  color: #cfff17;
+  font-weight: normal;
+  cursor: pointer;  
+}
+.you-solid{
+  animation-name: you-solid-text;
+  animation-delay: 2.5s;  
+  font-size: 40px;
+  right: -22%;
+  top: 19%;  
+}
+.we-love{
+  animation-name: we-love-text;   
+  animation-delay: 2.5s;
+  font-size: 13px;
+  right: -10%;
+  bottom: 5%;
+  color: #fff;
+}
+/*arrow animation*/
+
+.arrow {
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  transform-origin: 50% 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.arrow-first {
+  -webkit-animation: arrow-movement 2s ease-in-out infinite;
+          animation: arrow-movement 2s ease-in-out infinite;
+}
+
+.arrow-second {
+  -webkit-animation: arrow-movement 2s 1s ease-in-out infinite;
+          animation: arrow-movement 2s 1s ease-in-out infinite;
+}
+
+.arrow:before,
+.arrow:after {
+  background: #fff;
+  content: "";
+  display: block;
+  height: 3px;
+  position: absolute;
+  top: -15px;
+  left: 60px;
+  width: 10px;
+}
+
+.arrow:before {
+  transform: rotate(45deg) translateX(-10%);
+  transform-origin: top left;
+}
+
+.arrow:after {
+  transform: rotate(-45deg) translateX(10%);
+  transform-origin: top right;
+}
+
+@-webkit-keyframes arrow-movement {
+  0% {
+    opacity: 0;
+    top: 45%;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes arrow-movement {
+  0% {
+    opacity: 0;
+    top: 45%;
+  }
+  70% {
+    opacity: 7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*arrowanimation end*/
+@keyframes menu-button {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-135px); }    
+}
+@keyframes you-solid-text {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-425px); }      
+}
+@keyframes we-love-text {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-240px); }    
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  @keyframes yellow-bg {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-38%); }    
+  }
+  @keyframes black-yellow-bg { 
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-10%);}
+  }
+
+  @keyframes we-jump {
+    0% { transform: translatey(0px); }
+    100% { transform: translateY(-140px); }    
+  }
+
+  @keyframes ready-text {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(100px); }    
+  }
+
+  @keyframes logo-slider {
+    0% { transform: translateX(0%); }
+    100% {  transform: translate(-150%, -250%); }    
+  }
+
+  @keyframes left-slider {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-65%); }    
+  }
+  @keyframes right-slider {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(60%); }    
+  }
+  
