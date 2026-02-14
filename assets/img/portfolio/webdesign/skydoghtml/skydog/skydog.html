@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skytrek - Space Gaming NFT Project</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-glow {
+            position: fixed;
+            width: 384px;
+            height: 384px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.15), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(60px);
+            transform: translate(-192px, -192px);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.875rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #a855f7, #ec4899, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-button {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: linear-gradient(to right, #9333ea, #3b82f6);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.5);
+        }
+
+        .menu-button:hover { transform: scale(1.1) rotate(90deg); }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(0, 0, 0, 0.95));
+            backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(147, 51, 234, 0.3);
+            z-index: 50;
+            padding: 2rem;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .side-menu.active { right: 0; }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 40;
+            display: none;
+            opacity: 0;
+        }
+
+        .menu-overlay.active { display: block; opacity: 1; }
+
+        .close-menu {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .menu-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(to right, rgba(147, 51, 234, 0.2), rgba(59, 130, 246, 0.2));
+            transform: translateX(10px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #000428 100%);
+        }
+
+        .hero-bg { position: absolute; inset: 0; z-index: 0; }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 1; transform: translateY(-100px) scale(1.5); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 5rem 1.5rem 0;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #a78bfa, #ec4899, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            padding: 1.5rem 3rem;
+            background: linear-gradient(to right, #9333ea, #ec4899, #3b82f6);
+            border: none;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 20px 50px rgba(147, 51, 234, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(147, 51, 234, 0.8);
+        }
+
+        .btn-secondary {
+            padding: 1.5rem 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9999px;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Section */
+        section { padding: 8rem 0; position: relative; }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* SKY TOKEN UTILITY */
+        .token-section {
+            background: linear-gradient(135deg, #0a0020 0%, #1a0f35 50%, #0f0a25 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .token-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1615392030676-6c532fe0c302?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            animation: starMove 60s linear infinite;
+        }
+
+        @keyframes starMove {
+            from { transform: rotate(0deg) scale(1.1); }
+            to { transform: rotate(360deg) scale(1.1); }
+        }
+
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .token-card {
+            background: linear-gradient(145deg, rgba(147, 51, 234, 0.1), rgba(59, 130, 246, 0.1));
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .token-card::before {
+            content: '';
+            position: absolute;
+            inset: -100%;
+            background: linear-gradient(45deg, transparent, rgba(147, 51, 234, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .token-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .token-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #a855f7;
+            box-shadow: 0 30px 60px rgba(147, 51, 234, 0.4);
+        }
+
+        .token-icon {
+            width: 5rem;
+            height: 5rem;
+            background: linear-gradient(135deg, #9333ea, #3b82f6);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 40px rgba(147, 51, 234, 0.5);
+        }
+
+        .token-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .token-description {
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        /* NFT Collectibles */
+        .collectibles-section {
+            background: linear-gradient(to bottom, #000, #111827);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collectibles-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1500185497267-d635f9c5e90f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nft-card {
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            border: 4px solid rgba(147, 51, 234, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nft-card:hover {
+            transform: scale(1.1) rotate(5deg) translateY(-10px);
+            border-color: #a855f7;
+            box-shadow: 0 20px 60px rgba(147, 51, 234, 0.6);
+            z-index: 10;
+        }
+
+        .nft-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Roadmap */
+        .roadmap-section {
+            background: linear-gradient(to bottom, #111827, #000);
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .roadmap-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 244px;
+            border: 2px solid rgba(147, 51, 234, 0.2);
+            background: linear-gradient(to bottom, #1a0033, #0a0015);
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(147, 51, 234, 0.4);
+            border-color: rgba(147, 51, 234, 0.6);
+        }
+
+        .roadmap-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+        }
+
+        .roadmap-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 70%);
+        }
+
+        .roadmap-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+        }
+
+        .roadmap-phase {
+            font-size: 0.875rem;
+            color: #a78bfa;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
+        }
+
+        .roadmap-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #a78bfa;
+            border-radius: 50%;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+            color: #d1d5db;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nft-grid { grid-template-columns: repeat(3, 1fr); }
+            .token-grid { grid-template-columns: 1fr; }
+            .roadmap-grid { grid-template-columns: 1fr; }
+        }
+
+
+        .survival-section {
+            position: relative;
+            background: linear-gradient(135deg, #0f0a1e 0%, #1a0f2e 50%, #0a0015 100%);
+            overflow: hidden;
+        }
+        .survival-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.25;
+        }
+
+        .survival-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+        }
+
+        .survival-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.8) 70%);
+        }
+        .skytrek-section {
+            background: linear-gradient(to bottom, #000, #111827);
+        }
+
+        .skytrek-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .skytrek-image {
+            width: 100%;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px rgba(147, 51, 234, 0.3);
+        }
+         .gear-section {
+            background: linear-gradient(to bottom, #111827, #000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            position: relative;
+            background: linear-gradient(to bottom, #111827, #000);
+            border: 2px solid #374151;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.5s;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(to right, #9333ea, #ec4899);
+            border-radius: 1.5rem;
+            opacity: 0;
+            filter: blur(20px);
+            transition: opacity 0.5s;
+            z-index: -1;
+        }
+
+        .step-card:hover::before {
+            opacity: 0.5;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(147, 51, 234, 0.5);
+        }
+
+        .step-badge {
+            position: absolute;
+            top: -1.5rem;
+            right: -1.5rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background: linear-gradient(to right, #9333ea, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.875rem;
+            font-weight: bold;
+            box-shadow: 0 20px 50px rgba(147, 51, 234, 0.5);
+            border: 4px solid #000;
+        }
+
+        .step-card:nth-child(2) .step-badge {
+            background: linear-gradient(to right, #2563eb, #06b6d4);
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.5);
+        }
+
+        .step-card:nth-child(3) .step-badge {
+            background: linear-gradient(to right, #ea580c, #eab308);
+            box-shadow: 0 20px 50px rgba(234, 88, 12, 0.5);
+        }
+
+        .step-icon {
+            width: 7rem;
+            height: 7rem;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(to right, #9333ea, #ec4899);
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.75rem;
+            box-shadow: 0 20px 50px rgba(147, 51, 234, 0.5);
+        }
+
+        .step-card:nth-child(2) .step-icon {
+            background: linear-gradient(to right, #2563eb, #06b6d4);
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.5);
+        }
+
+        .step-card:nth-child(3) .step-icon {
+            background: linear-gradient(to right, #ea580c, #eab308);
+            box-shadow: 0 20px 50px rgba(234, 88, 12, 0.5);
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            font-size: 1.125rem;
+            color: #9ca3af;
+            text-align: center;
+            line-height: 1.75;
+        }
+        footer {
+            position: relative;
+            padding: 5rem 0 2rem;
+            background: #000;
+            border-top: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-logo {
+            font-size: 2.25rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: #9ca3af;
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: linear-gradient(to right, rgba(147, 51, 234, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(to right, #9333ea, #3b82f6);
+            border-color: #a855f7;
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #a855f7;
+            transform: translateX(5px);
+            display: inline-block;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(147, 51, 234, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: #6b7280;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #a855f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">SKYTREK</div>
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <button class="close-menu" onclick="toggleMenu()">×</button>
+        <h2 class="menu-title">Navigation</h2>
+        <nav>
+            <a href="#home" class="menu-item" onclick="closeMenu()"><span>Home</span><span>→</span></a>
+            <a href="#skytrek" class="menu-item" onclick="closeMenu()"><span>Skytrek</span><span>→</span></a>
+            <a href="#sky-token" class="menu-item" onclick="closeMenu()"><span>Sky Token</span><span>→</span></a>
+            <a href="#collectibles" class="menu-item" onclick="closeMenu()"><span>NFT's</span><span>→</span></a>
+            <a href="#roadmap" class="menu-item" onclick="closeMenu()"><span>Roadmap</span><span>→</span></a>
+            <a href="#faq" class="menu-item" onclick="closeMenu()"><span>FAQ</span><span>→</span></a>
+        </nav>
+    </div>
+
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <img src="images/hero-section.png" alt="Space">
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gradient-text">SKYTREK</span><br>
+                <span>EXPLORE THE GALAXY</span>
+            </h1>
+            <p style="font-size: 1.5rem; color: #d1d5db; margin-bottom: 2.5rem; max-width: 48rem; margin: 0 auto 2.5rem;">
+                Join the ultimate space adventure. Collect rare NFTs, battle across the cosmos, and earn rewards!
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-primary">ENTER GALAXY →</button>
+                <button class="btn-secondary">LEARN MORE</button>
+            </div>
+        </div>
+    </section>
+
+  <section id="skytrek" class="skytrek-section">
+        <div class="container">
+            <div class="skytrek-grid">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1759663174086-941229ec510f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800" alt="Skytrek Character" class="skytrek-image">
+                </div>
+                
+                <div>
+                    <h2 style="font-size: clamp(2.5rem, 5vw, 3.75rem); margin-bottom: 1.5rem;">SKYTREK</h2>
+                    <h3 style="font-size: clamp(1.875rem, 4vw, 2.25rem); margin-bottom: 1.5rem; line-height: 1.3;">
+                        THE <span style="color: #60a5fa;">PLAY-TO-EARN</span>
+                        <br>
+                        <span style="color: #a855f7;">SPACE ADVENTURE</span>
+                        <br>
+                        AWAITS!
+                    </h3>
+                    <p style="font-size: 1.25rem; color: #d1d5db; line-height: 1.75; margin-bottom: 2rem;">
+                        Join thousands of players in the ultimate space exploration game. 
+                        Build your empire, collect rare NFTs, and earn real rewards as you conquer the galaxy.
+                    </p>
+                    <button class="btn-primary">PLAY NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKY TOKEN UTILITY Section -->
+    <section id="sky-token" class="token-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">SKY TOKEN</span> UTILITY
+            </h2>
+            <p style="text-align: center; font-size: 1.25rem; color: #9ca3af; margin-bottom: 4rem; max-width: 56rem; margin-left: auto; margin-right: auto;">
+                Unlock exclusive benefits and power up your space adventure with SKY tokens
+            </p>
+
+            <div class="token-grid">
+                <div class="token-card">
+                    <div class="token-icon">🎮</div>
+                    <h3 class="token-title">In-Game Currency</h3>
+                    <p class="token-description">Use SKY tokens to purchase upgrades, weapons, and exclusive in-game items to enhance your gameplay experience.</p>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-icon">💎</div>
+                    <h3 class="token-title">Staking Rewards</h3>
+                    <p class="token-description">Stake your SKY tokens to earn passive income and receive exclusive NFT airdrops and special bonuses.</p>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-icon">🏆</div>
+                    <h3 class="token-title">Governance Rights</h3>
+                    <p class="token-description">Participate in community voting and help shape the future direction of the Skytrek ecosystem.</p>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-icon">⚡</div>
+                    <h3 class="token-title">Early Access</h3>
+                    <p class="token-description">Get early access to new features, NFT drops, and exclusive events before the general public.</p>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-icon">🛡️</div>
+                    <h3 class="token-title">Premium Benefits</h3>
+                    <p class="token-description">Unlock premium features including advanced analytics, exclusive tournaments, and VIP support.</p>
+                </div>
+
+                <div class="token-card">
+                    <div class="token-icon">🎁</div>
+                    <h3 class="token-title">Marketplace Discounts</h3>
+                    <p class="token-description">Enjoy special discounts on all marketplace transactions and reduced fees for NFT trading.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 4rem;">
+                <button class="btn-primary">GET SKY TOKENS →</button>
+            </div>
+        </div>
+    </section>
+
+<section id="survival" class="survival-section">
+        <div class="survival-bg">
+            <img src="https://images.unsplash.com/photo-1573204386920-c3c0f8bf91e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920" alt="Space Battle">
+            <div class="survival-overlay"></div>
+        </div>
+        
+        <div class="container" style="position: relative; z-index: 10;">
+            <h2 class="section-title">
+                <span style="color: #ef4444;">A FIGHT FOR SURVIVAL</span>
+            </h2>
+            <div style="max-width: 56rem; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.25rem; color: #d1d5db; line-height: 1.75; margin-bottom: 1.5rem;">
+                    In a universe torn apart by cosmic wars, only the strongest survive. 
+                    Command your fleet, forge alliances, and battle for dominance across infinite galaxies.
+                </p>
+                <p style="font-size: 1.25rem; color: #d1d5db; line-height: 1.75; margin-bottom: 2rem;">
+                    Every decision matters. Every battle shapes your destiny. The fate of entire civilizations 
+                    rests in your hands as you navigate through treacherous space territories, encounter 
+                    hostile forces, and discover ancient technologies that could tip the scales of power.
+                </p>
+                <button class="btn-secondary" style="border-color: #ef4444;">
+                    LEARN MORE 
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-left: 0.5rem;">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+
+      <!-- Gear Up Section -->
+    <section id="gear-up" class="gear-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">GEAR UP IN</span>
+                <br>
+                <span style="font-size: clamp(3rem, 8vw, 6rem);">3 EASY STEPS!</span>
+            </h2>
+            <p style="text-align: center; font-size: 1.25rem; color: #9ca3af; margin-bottom: 4rem;">
+                Start your adventure in just a few clicks
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-badge">1</div>
+                    <div class="step-icon">👨‍🚀</div>
+                    <h3 class="step-title">SELECT YOUR HERO</h3>
+                    <p class="step-description">
+                        Choose from unique NFT characters with special abilities and powers
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-badge">2</div>
+                    <div class="step-icon">🚀</div>
+                    <h3 class="step-title">GET YOUR SPACESHIP</h3>
+                    <p class="step-description">
+                        Pick your vessel for space exploration and customize it to your style
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-badge">3</div>
+                    <div class="step-icon">⭐</div>
+                    <h3 class="step-title">START YOUR ADVENTURE</h3>
+                    <p class="step-description">
+                        Begin your journey across galaxies and earn rewards as you play
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 4rem;">
+                <button class="btn-primary">
+                    START YOUR JOURNEY 
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-left: 0.75rem;">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="roadmap-section">
+        <div class="container">
+            <h2 class="section-title">THE <span style="color: #a855f7;">SKYTREK</span> ROADMAP</h2>
+
+            <div class="roadmap-grid">
+                <div class="roadmap-card">
+                   
+                    <div class="roadmap-overlay"></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">PHASE 1</div>
+                        <h3 class="roadmap-title">LAUNCH</h3>
+                        <ul class="roadmap-list">
+                            <li>NFT Collection Drop</li>
+                            <li>Community Building</li>
+                            <li>Marketplace Launch</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="roadmap-card">
+                   
+                    <div class="roadmap-overlay"></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">PHASE 2</div>
+                        <h3 class="roadmap-title">EXPANSION</h3>
+                        <ul class="roadmap-list">
+                            <li>Game Alpha Release</li>
+                            <li>Token Launch</li>
+                            <li>Staking Platform</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="roadmap-card">
+                    
+                    <div class="roadmap-overlay"></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">PHASE 3</div>
+                        <h3 class="roadmap-title">DOMINATION</h3>
+                        <ul class="roadmap-list">
+                            <li>Full Game Launch</li>
+                            <li>Mobile App</li>
+                            <li>Global Tournament</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" style="background: linear-gradient(to bottom, #000, #111827); padding-top:0px;">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            <div style="max-width: 56rem; margin: 0 auto;">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How can I buy Skydogs NFT's?</span><span>▼</span>
+                    </button>
+                    <div class="faq-answer">You can purchase Skydogs NFTs directly through our marketplace using cryptocurrency.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How can I play & earn with Skytrek?</span><span>▼</span>
+                    </button>
+                    <div class="faq-answer">Start by selecting your character and spaceship, complete missions and challenges, and earn SKY tokens as rewards.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are the benefits of holding SKY tokens?</span><span>▼</span>
+                    </button>
+                    <div class="faq-answer">SKY token holders get exclusive access to premium features, early access to new content, governance voting rights, and staking rewards.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+<footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">SKYTREK</div>
+                    <p class="footer-description">
+                        The ultimate play-to-earn space adventure. Build your empire, collect NFTs, and rule the galaxy.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Twitter">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Discord">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 0 0-5.487 0 12.36 12.36 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026 14.09 14.09 0 0 0 1.226-1.963.075.075 0 0 0-.041-.104 13.201 13.201 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028zM8.02 15.278c-1.182 0-2.157-1.069-2.157-2.38 0-1.312.956-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.956 2.38-2.157 2.38zm7.975 0c-1.183 0-2.157-1.069-2.157-2.38 0-1.312.955-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.946 2.38-2.157 2.38z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Facebook">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1.5rem;">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Marketplace</a></li>
+                        <li><a href="#">Whitepaper</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div style="width: 10rem; height: 10rem; background: linear-gradient(135deg, #9333ea, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 20px 60px rgba(147, 51, 234, 0.4);">
+                        🚀
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Skytrek. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Cursor glow
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+        function animateCursor() {
+            currentX += (mouseX - currentX) * 0.15;
+            currentY += (mouseY - currentY) * 0.15;
+            cursorGlow.style.left = currentX + 'px';
+            cursorGlow.style.top = currentY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animation = `floatParticle ${Math.random() * 5 + 3}s infinite`;
+            particle.style.animationDelay = Math.random() * 3 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Menu
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        }
+
+        function closeMenu() {
+            document.getElementById('sideMenu').classList.remove('active');
+            document.getElementById('menuOverlay').classList.remove('active');
+        }
+
+        // FAQ
+        function toggleFAQ(button) {
+            const faqItem = button.closest('.faq-item');
+            const wasActive = faqItem.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if (!wasActive) faqItem.classList.add('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
